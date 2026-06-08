@@ -8,14 +8,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class GoalMilestone extends Model
 {
     protected $fillable = [
-        'goal_id', 'title', 'target_count', 'is_achieved', 'achieved_at', 'order_position',
+        'goal_id',
+        'title',
+        'description',
+        'due_date',
+        'is_completed',
+        'completed_at',
+        'order_position',
     ];
 
     protected function casts(): array
     {
         return [
-            'is_achieved' => 'boolean',
-            'achieved_at' => 'datetime',
+            'due_date' => 'date',
+            'is_completed' => 'boolean',
+            'completed_at' => 'datetime',
         ];
     }
 

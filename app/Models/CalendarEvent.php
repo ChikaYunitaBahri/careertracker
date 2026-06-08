@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CalendarEvent extends Model
 {
+    use HasFactory;
+    
     protected $fillable = [
         'user_id', 'application_id', 'title', 'event_type',
         'event_datetime', 'end_datetime', 'description', 'location',

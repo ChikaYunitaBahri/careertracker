@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('career_goals', function (Blueprint $table) {
@@ -25,14 +22,10 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->enum('status', ['active', 'achieved', 'archived'])->default('active');
             $table->timestamps();
-
             $table->index(['user_id', 'status']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('career_goals');

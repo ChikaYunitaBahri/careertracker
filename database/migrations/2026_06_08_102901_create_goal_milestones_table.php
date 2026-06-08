@@ -13,13 +13,27 @@ return new class extends Migration
     {
         Schema::create('goal_milestones', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('goal_id')->constrained('career_goals')->cascadeOnDelete();
+
+            $table->foreignId('goal_id')
+                ->constrained('career_goals')
+                ->cascadeOnDelete();
+
             $table->string('title');
-            $table->unsignedInteger('target_count');
-            $table->boolean('is_achieved')->default(false);
-            $table->timestamp('achieved_at')->nullable();
+
+            $table->text('description')->nullable();
+
+            $table->date('due_date')->nullable();
+
+            $table->boolean('is_completed')->default(false);
+
+            $table->timestamp('completed_at')->nullable();
+
             $table->unsignedTinyInteger('order_position')->default(1);
+
             $table->timestamps();
+
+            $table->index(['goal_id', 'is_completed']);
+            $table->index(['goal_id', 'order_position']);
         });
     }
 

@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CareerGoal extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'user_id', 'title', 'job_type', 'target_industries', 'target_cities',
         'target_application_count', 'current_count', 'target_salary_min',
