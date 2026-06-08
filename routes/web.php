@@ -10,12 +10,19 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GoalMilestoneController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserNotificationPrefController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
 
+    Route::get('/', function () {
+        return redirect()->route('login');
+    });
+
     // Dashboard
-    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard');
 
     // Applications (Tracker Lamaran)
     Route::resource('applications', ApplicationController::class)
@@ -43,10 +50,10 @@ Route::middleware(['auth'])->group(function () {
         ->except(['create', 'edit']);
 
     // Career Goals
-    Route::resource('goals', CareerGoalController::class)
+    Route::resource('career-goals', CareerGoalController::class)
         ->except(['create', 'edit']);
 
-    Route::prefix('goals/{goal}')->name('goals.')->group(function () {
+    Route::prefix('career-goals/{goal}')->name('career-goals.')->group(function () {
         Route::resource('milestones', GoalMilestoneController::class)
             ->only(['store', 'update', 'destroy']);
     });
@@ -62,4 +69,17 @@ Route::middleware(['auth'])->group(function () {
     Route::singleton('notification-prefs', UserNotificationPrefController::class)
         ->only(['show', 'update']);
 
+
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
+
 });
+
+require __DIR__.'/auth.php';

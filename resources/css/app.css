@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+
+    --primary: #5E3BDB;
+    --primary-light: #F0EBFB;
+
+    --secondary: #006494;
+
+    --bg: #F8F9FD;
+
+    --card: #FFFFFF;
+
+    --border: #E1E2E6;
+
+    --text: #191C1F;
+
+    --text-soft: #484555;
+
+    --success: #16A34A;
+    --danger: #DC2626;
+    --warning: #D97706;
+}
