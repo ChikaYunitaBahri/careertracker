@@ -13,7 +13,23 @@ return new class extends Migration
     {
         Schema::create('calendar_events', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('application_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('title');
+            $table->enum('event_type', ['interview', 'test', 'deadline', 'followup', 'other'])
+                ->default('other');
+            $table->dateTime('event_datetime');
+            $table->dateTime('end_datetime')->nullable();
+            $table->text('description')->nullable();
+            $table->string('location')->nullable();
+            $table->boolean('is_online')->default(false);
+            $table->unsignedInteger('reminder_minutes')->nullable();
+            $table->boolean('is_completed')->default(false);
+            $table->string('color', 7)->nullable();
             $table->timestamps();
+
+            $table->index(['user_id', 'event_datetime']);
+            $table->index(['user_id', 'is_completed']);
         });
     }
 

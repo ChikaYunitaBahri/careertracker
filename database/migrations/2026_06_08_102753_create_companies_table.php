@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('industry', 100)->nullable();
+            $table->enum('size', ['startup', 'small', 'medium', 'large', 'corporate'])->nullable();
+            $table->string('website', 500)->nullable();
+            $table->string('location')->nullable();
+            $table->string('logo_url', 500)->nullable();
+            $table->text('description')->nullable();
+            $table->text('culture_notes')->nullable();
+            $table->text('benefits_notes')->nullable();
+            $table->unsignedTinyInteger('personal_rating')->nullable(); // 1-5
+            $table->json('tags')->nullable();
             $table->timestamps();
         });
     }

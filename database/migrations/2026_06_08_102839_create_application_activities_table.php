@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('application_activities', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('application_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('activity_type', 100);
+            $table->text('description');
+            $table->json('metadata')->nullable();
+            $table->timestamp('created_at')->useCurrent(); // hanya created_at, immutable log
         });
     }
 

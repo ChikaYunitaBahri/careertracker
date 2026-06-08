@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('user_notification_prefs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->unique()->constrained()->cascadeOnDelete();
+            $table->boolean('email_enabled')->default(true);
+            $table->boolean('push_enabled')->default(true);
+            $table->boolean('interview_reminder_email')->default(true);
+            $table->boolean('interview_reminder_push')->default(true);
+            $table->boolean('idle_application_email')->default(true);
+            $table->boolean('idle_application_push')->default(false);
+            $table->boolean('goal_milestone_push')->default(true);
+            $table->boolean('weekly_summary_email')->default(true);
             $table->timestamps();
         });
     }

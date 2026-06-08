@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('application_documents', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('application_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->enum('document_type', ['cv', 'cover_letter', 'portfolio', 'other']);
+            $table->string('file_name');
+            $table->string('file_path', 500);
+            $table->unsignedInteger('file_size')->nullable();   // bytes
+            $table->string('mime_type', 100)->nullable();
             $table->timestamps();
         });
     }

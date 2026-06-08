@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('recruitment_statuses', function (Blueprint $table) {
             $table->id();
+            $table->string('slug', 50)->unique();
+            $table->string('label', 100);
+            $table->string('color', 7);          // hex: #3498DB
+            $table->unsignedTinyInteger('order_position');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

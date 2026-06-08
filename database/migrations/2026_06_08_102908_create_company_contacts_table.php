@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('company_contacts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('company_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('role', 100)->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone', 30)->nullable();
+            $table->string('linkedin_url', 500)->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
