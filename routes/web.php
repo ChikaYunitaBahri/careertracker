@@ -1,20 +1,65 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\ApplicationDocumentController;
+use App\Http\Controllers\ApplicationNoteController;
+use App\Http\Controllers\CalendarEventController;
+use App\Http\Controllers\CareerGoalController;
+use App\Http\Controllers\CompanyContactController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\GoalMilestoneController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\UserNotificationPrefController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['auth'])->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+
+    // Applications (Tracker Lamaran)
+    Route::resource('applications', ApplicationController::class)
+        ->except(['create', 'edit']); // Gunakan modal/SPA, skip view routes
+
+    // Nested resources di bawah Application
+    Route::prefix('applications/{application}')->name('applications.')->group(function () {
+        Route::resource('notes', ApplicationNoteController::class)
+            ->only(['store', 'update', 'destroy']);
+
+        Route::resource('documents', ApplicationDocumentController::class)
+            ->only(['store', 'destroy']);
+    });
+
+    // Companies (Manajemen Perusahaan)
+    Route::resource('companies', CompanyController::class);
+
+    Route::prefix('companies/{company}')->name('companies.')->group(function () {
+        Route::resource('contacts', CompanyContactController::class)
+            ->only(['store', 'update', 'destroy']);
+    });
+
+    // Calendar Events
+    Route::resource('calendar-events', CalendarEventController::class)
+        ->except(['create', 'edit']);
+
+    // Career Goals
+    Route::resource('goals', CareerGoalController::class)
+        ->except(['create', 'edit']);
+
+    Route::prefix('goals/{goal}')->name('goals.')->group(function () {
+        Route::resource('milestones', GoalMilestoneController::class)
+            ->only(['store', 'update', 'destroy']);
+    });
+
+    // Notifications
+    Route::prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('/', [NotificationController::class, 'index'])->name('index');
+        Route::patch('{id}/read', [NotificationController::class, 'markAsRead'])->name('read');
+        Route::post('read-all', [NotificationController::class, 'markAllRead'])->name('read-all');
+    });
+
+    // User Notification Preferences
+    Route::singleton('notification-prefs', UserNotificationPrefController::class)
+        ->only(['show', 'update']);
+
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__.'/auth.php';

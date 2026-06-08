@@ -12,7 +12,7 @@ class StoreCompanyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->company->user_id === $this->user()->id;
     }
 
     /**
@@ -23,7 +23,18 @@ class StoreCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name'            => ['required', 'string', 'max:255'],
+            'industry'        => ['nullable', 'string', 'max:100'],
+            'size'            => ['nullable', 'in:startup,small,medium,large,corporate'],
+            'website'         => ['nullable', 'url', 'max:500'],
+            'location'        => ['nullable', 'string', 'max:255'],
+            'logo_url'        => ['nullable', 'url', 'max:500'],
+            'description'     => ['nullable', 'string'],
+            'culture_notes'   => ['nullable', 'string'],
+            'benefits_notes'  => ['nullable', 'string'],
+            'personal_rating' => ['nullable', 'integer', 'min:1', 'max:5'],
+            'tags'            => ['nullable', 'array'],
+            'tags.*'          => ['string', 'max:50'],
         ];
     }
 }

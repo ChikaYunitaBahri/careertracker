@@ -12,7 +12,7 @@ class StoreApplicationNoteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->applicationNote->user_id === $this->user()->id;
     }
 
     /**
@@ -23,7 +23,11 @@ class StoreApplicationNoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'note_type'        => ['required', 'in:hr_interview,user_interview,psikotest,general'],
+            'interview_date'   => ['nullable', 'date'],
+            'interviewer_name' => ['nullable', 'string', 'max:255'],
+            'content'          => ['required', 'string'],
+            'impression'       => ['nullable', 'string'],
         ];
     }
 }

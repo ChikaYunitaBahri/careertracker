@@ -12,7 +12,7 @@ class UpdateUserNotificationPrefRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->userNotificationPref->user_id === $this->user()->id;
     }
 
     /**
@@ -23,7 +23,14 @@ class UpdateUserNotificationPrefRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'email_enabled'             => ['boolean'],
+            'push_enabled'              => ['boolean'],
+            'interview_reminder_email'  => ['boolean'],
+            'interview_reminder_push'   => ['boolean'],
+            'idle_application_email'    => ['boolean'],
+            'idle_application_push'     => ['boolean'],
+            'goal_milestone_push'       => ['boolean'],
+            'weekly_summary_email'      => ['boolean'],
         ];
     }
 }

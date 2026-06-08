@@ -12,7 +12,7 @@ class StoreApplicationDocumentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->applicationDocument->user_id === $this->user()->id;
     }
 
     /**
@@ -23,7 +23,13 @@ class StoreApplicationDocumentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'document_type' => ['required', 'in:cv,cover_letter,portfolio,other'],
+            'file'          => [
+                'required',
+                'file',
+                'max:10240',      // maksimum 10MB
+                'mimes:pdf,doc,docx,jpg,jpeg,png',
+            ],
         ];
     }
 }

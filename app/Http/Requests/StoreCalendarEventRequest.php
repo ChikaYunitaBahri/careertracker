@@ -12,7 +12,7 @@ class StoreCalendarEventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->calendarEvent->user_id === $this->user()->id;
     }
 
     /**
@@ -23,7 +23,16 @@ class StoreCalendarEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'application_id'   => ['nullable', 'exists:applications,id'],
+            'title'            => ['required', 'string', 'max:255'],
+            'event_type'       => ['required', 'in:interview,test,deadline,followup,other'],
+            'event_datetime'   => ['required', 'date', 'after:now'],
+            'end_datetime'     => ['nullable', 'date', 'after:event_datetime'],
+            'description'      => ['nullable', 'string'],
+            'location'         => ['nullable', 'string', 'max:255'],
+            'is_online'        => ['boolean'],
+            'reminder_minutes' => ['nullable', 'integer', 'min:5', 'max:10080'],
+            'color'            => ['nullable', 'regex:/^#[0-9A-Fa-f]{6}$/'],
         ];
     }
 }
