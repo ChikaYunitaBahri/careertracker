@@ -19,17 +19,20 @@ class Company extends Model
         'website',
         'location',
         'logo_url',
+        'personal_rating',
         'description',
         'culture_notes',
         'benefits_notes',
         'personal_rating',
         'tags',
+        'benefits_notes',
     ];
 
     protected function casts(): array
     {
         return [
             'tags' => 'array',
+            'personal_rating' => 'integer',
         ];
     }
 

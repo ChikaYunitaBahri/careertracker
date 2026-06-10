@@ -1,111 +1,126 @@
 <?php
+
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
-use App\Models\Company;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class CompanyController extends Controller
 {
     /**
-     * Tampilkan daftar semua perusahaan milik user.
-     * Dilengkapi jumlah lamaran per perusahaan dan filter pencarian.
+     * INDEX — List semua perusahaan milik user yang login,
+     * dengan filter search, industry, sort, dan view mode.
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
-        $query = auth()->user()
-            ->companies()
-            ->withCount('applications');
+        $query = Company::where('user_id', auth()->id());
 
-        // Filter pencarian berdasarkan nama perusahaan atau industri
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('industry', 'like', "%{$search}%");
-            });
+        // Search
+        if ($search = $request->get('search')) {
+            $query->where('name', 'like', '%' . $search . '%');
         }
 
-        // Filter berdasarkan ukuran perusahaan
-        if ($request->filled('size')) {
-            $query->where('size', $request->size);
+        // Filter industri (bisa multiple, dipisah koma)
+        if ($industry = $request->get('industry')) {
+            $industries = array_filter(explode(',', $industry));
+            if (! empty($industries)) {
+                $query->whereIn('industry', $industries);
+            }
         }
 
-        $companies = $query->latest()->paginate(12)->withQueryString();
+        // Sort
+        $sort = $request->get('sort', 'latest');
+        match ($sort) {
+            'oldest' => $query->oldest(),
+            'name'   => $query->orderBy('name'),
+            default  => $query->latest(),
+        };
 
-        return view('companies.index', compact('companies'));
+        $companies = $query->paginate(12)->withQueryString();
+        $viewMode  = $request->get('view', 'board'); // 'board' atau 'list'
+
+        return view('companies.index', compact('companies', 'viewMode'));
     }
 
     /**
-     * Tampilkan form untuk menambah perusahaan baru.
+     * SHOW — Fix 403: pastikan hanya pemilik yang bisa lihat.
      */
-    public function create(): View
+    public function show(Company $company)
     {
-        return view('companies.create');
-    }
+        // Cek kepemilikan — kalau bukan miliknya, abort 403
+        abort_if($company->user_id !== auth()->id(), 403);
+        
+        $company->load('contacts');
 
-    /**
-     * Simpan perusahaan baru ke database.
-     */
-    public function store(StoreCompanyRequest $request): RedirectResponse
-    {
-        $company = $request->user()->companies()->create($request->validated());
-
-        return redirect()->route('companies.show', $company)
-            ->with('success', 'Perusahaan berhasil ditambahkan.');
-    }
-
-    /**
-     * Tampilkan detail perusahaan beserta daftar lamaran dan kontak yang terkait.
-     */
-    public function show(Company $company): View
-    {
-        $this->authorize('view', $company);
-
-        $company->load([
-            'applications.status',
-            'contacts' => fn($q) => $q->orderBy('name'),
+        $company->loadCount([
+            'contacts',
+            'applications'
         ]);
 
         return view('companies.show', compact('company'));
     }
 
     /**
-     * Tampilkan form edit data perusahaan.
+     * CREATE
      */
-    public function edit(Company $company): View
+    public function create()
     {
-        $this->authorize('update', $company);
+        return view('companies.create');
+    }
+
+    /**
+     * STORE — Fix: user_id di-set dari auth(), bukan dari request.
+     */
+    public function store(StoreCompanyRequest $request)
+    {
+        $data            = $request->validated();
+        $data['user_id'] = auth()->id(); // Selalu dari server, bukan input
+
+        Company::create($data);
+
+        return redirect()
+            ->route('companies.index')
+            ->with('success', 'Perusahaan berhasil ditambahkan.');
+    }
+
+    /**
+     * EDIT — Fix 403
+     */
+    public function edit(Company $company)
+    {
+        abort_if($company->user_id !== auth()->id(), 403);
 
         return view('companies.edit', compact('company'));
     }
 
     /**
-     * Perbarui data perusahaan yang sudah ada.
+     * UPDATE — Fix 403
      */
-    public function update(UpdateCompanyRequest $request, Company $company): RedirectResponse
+    public function update(UpdateCompanyRequest $request, Company $company)
     {
-        $this->authorize('update', $company);
+        abort_if($company->user_id !== auth()->id(), 403);
 
         $company->update($request->validated());
 
-        return back()->with('success', 'Data perusahaan berhasil diperbarui.');
+        return redirect()
+            ->route('companies.show', $company)
+            ->with('success', 'Perusahaan berhasil diperbarui.');
     }
 
     /**
-     * Hapus perusahaan. Lamaran yang terhubung akan di-set null (nullOnDelete)
-     * sesuai konfigurasi migration, data lamaran tetap terjaga.
+     * DESTROY — Fix: delete modal tidak berfungsi karena event Alpine.js
+     * belum di-init dengan benar. Di sini cukup pastikan otorisasi.
      */
-    public function destroy(Company $company): RedirectResponse
+    public function destroy(Company $company)
     {
-        $this->authorize('delete', $company);
+        abort_if($company->user_id !== auth()->id(), 403);
 
         $company->delete();
 
-        return redirect()->route('companies.index')
+        return redirect()
+            ->route('companies.index')
             ->with('success', 'Perusahaan berhasil dihapus.');
     }
 }

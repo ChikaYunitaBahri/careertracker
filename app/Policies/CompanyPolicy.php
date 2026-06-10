@@ -4,63 +4,56 @@ namespace App\Policies;
 
 use App\Models\Company;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class CompanyPolicy
 {
     /**
-     * Determine whether the user can view any models.
+     * User dapat melihat daftar perusahaan miliknya.
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
-     * Determine whether the user can view the model.
+     * User dapat melihat perusahaan miliknya sendiri.
      */
     public function view(User $user, Company $company): bool
     {
-        return false;
+        return $company->user_id === $user->id;
     }
 
     /**
-     * Determine whether the user can create models.
+     * Semua user login boleh membuat perusahaan.
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Hanya pemilik perusahaan yang boleh mengubah.
      */
     public function update(User $user, Company $company): bool
     {
-        return false;
+        return $company->user_id === $user->id;
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * Hanya pemilik perusahaan yang boleh menghapus.
      */
     public function delete(User $user, Company $company): bool
     {
-        return false;
+        return $company->user_id === $user->id;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
     public function restore(User $user, Company $company): bool
     {
-        return false;
+        return $company->user_id === $user->id;
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
     public function forceDelete(User $user, Company $company): bool
     {
-        return false;
+        return $company->user_id === $user->id;
     }
 }

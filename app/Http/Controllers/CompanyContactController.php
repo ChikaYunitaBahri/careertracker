@@ -16,18 +16,52 @@ class CompanyContactController extends Controller
      * dengan proses rekrutmen di perusahaan tersebut.
      * user_id diisi dari sesi login agar kepemilikan data tetap terjaga.
      */
-    public function store(StoreCompanyContactRequest $request, Company $company): RedirectResponse
+    public function create(Company $company)
     {
-        $this->authorize('view', $company);
+        return view('contacts.create', [
+            'company' => $company
+        ]);
+    }
+    
+    public function show(Company $company)
+    {
+        $company->load('contacts');
 
-        $company->contacts()->create([
-            ...$request->validated(),
-            'user_id' => $request->user()->id,
+        $company->loadCount([
+            'contacts',
+            'applications'
         ]);
 
-        return back()->with('success', 'Kontak berhasil ditambahkan.');
+        return view('companies.show', compact('company'));
+    }
+    
+    public function store(StoreCompanyContactRequest $request, Company $company): RedirectResponse
+    {
+        $company->contacts()->create([
+            ...$request->validated(),
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()
+            ->route('companies.show', $company)
+            ->with('success', 'Kontak berhasil ditambahkan.');
     }
 
+    public function edit(
+        Company $company,
+        CompanyContact $contact
+    ) {
+        abort_if(
+            $contact->company_id !== $company->id,
+            404
+        );
+
+        return view(
+            'contacts.edit',
+            compact('company', 'contact')
+        );
+    }
+    
     /**
      * Perbarui data kontak perusahaan.
      * Validasi memastikan kontak memang milik perusahaan yang dimaksud.
@@ -40,7 +74,9 @@ class CompanyContactController extends Controller
 
         $contact->update($request->validated());
 
-        return back()->with('success', 'Data kontak berhasil diperbarui.');
+       return redirect()
+            ->route('companies.show', $company)
+            ->with('success', 'Data kontak berhasil diperbarui.');
     }
 
     /**
@@ -54,6 +90,8 @@ class CompanyContactController extends Controller
 
         $contact->delete();
 
-        return back()->with('success', 'Kontak berhasil dihapus.');
+        return redirect()
+            ->route('companies.show', $company)
+            ->with('success', 'Kontak berhasil dihapus.');
     }
 }
