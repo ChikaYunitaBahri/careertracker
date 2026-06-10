@@ -11,7 +11,7 @@
             <h1 class="text-3xl font-bold tracking-tight text-[#191C1F]">
                 Lamaran Saya
             </h1>
-            <p class="text-sm text-[#797586] mt-1">
+            <p class="text-[#797586] mt-2">
                 {{ $totalActive }} lamaran aktif
             </p>
         </div>

@@ -235,18 +235,19 @@
 
         </div>
 
-        {{-- ── ACTION BUTTONS ────────────────────────────────────────── --}}
-        <div class="flex items-center justify-between gap-3 pb-4">
-            <a href="{{ route('applications.show', $application) }}"
-                class="text-sm font-medium text-[#797586] hover:text-[#191C1F] px-4 py-2.5 rounded-lg hover:bg-[#F0F1F5] transition-colors">
+        {{-- Action Buttons --}}
+        <div class="flex items-center justify-between gap-4 pt-2 pb-8">
+
+            <a href="{{ route('applications.index') }}"
+                class="flex items-center justify-center gap-2 bg-[#EFF1F5] text-sm text-[#797586] hover:text-[#191C1F] transition-colors px-6 py-3 border border-[#E1E2E6] rounded-xl hover:bg-[#EFF1F5] flex-1">
                 Batal
             </a>
+
             <button type="submit"
-                class="flex items-center gap-2 bg-[#5E3BDB] text-white text-sm font-medium px-6 py-2.5 rounded-lg hover:bg-[#4d31b8] transition-colors">
+                class="flex items-center justify-center gap-2 bg-[#5E3BDB] text-white text-sm font-medium px-6 py-3 rounded-xl hover:bg-[#4d31b8] transition-colors flex-[3]">
                 <i class="ri-save-line text-base"></i>
-                Simpan Perubahan
+                Simpan Perusahaan
             </button>
-        </div>
 
     </form>
 
