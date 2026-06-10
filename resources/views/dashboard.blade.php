@@ -9,12 +9,12 @@
 
         <div>
 
-            <h1 class="text-4xl font-bold tracking-tight text-[#191C1F]">
+            <h1 class="text-3xl font-bold tracking-tight text-[#191C1F]">
                 Dashboard
             </h1>
 
             <p class="text-[#797586] mt-2">
-                Welcome back, {{ Auth::user()->name }} 👋
+                Welcome back, {{ Auth::user()->name }} 
             </p>
 
         </div>
@@ -82,7 +82,7 @@
 
             <div class="flex justify-between items-center mb-8">
 
-                <h2 class="text-2xl font-semibold">
+                <h2 class="text-xl font-semibold">
                     Progress Goal Karier
                 </h2>
 
@@ -177,7 +177,7 @@
         <div
             class="bg-white border border-[#E1E2E6] rounded-2xl p-6">
 
-            <h2 class="text-2xl font-semibold mb-8">
+            <h2 class="text-xl font-semibold mb-8">
                 Aktivitas Mendatang
             </h2>
 
@@ -252,7 +252,7 @@
             <div
                 class="p-6 border-b border-[#E1E2E6] flex justify-between items-center">
 
-                <h2 class="text-2xl font-semibold">
+                <h2 class="text-xl font-semibold">
                     Aplikasi Terbaru
                 </h2>
 
@@ -329,7 +329,7 @@
         <div
             class="bg-white border border-[#E1E2E6] rounded-2xl p-6">
 
-            <h2 class="text-2xl font-semibold mb-6">
+            <h2 class="text-xl font-semibold mb-6">
                 Pipeline Aplikasi
             </h2>
 
