@@ -22,6 +22,7 @@ use App\Policies\CompanyPolicy;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,6 +39,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // ─── Pagination View ─────────────────────────────────────────────────────
+        Paginator::useTailwind();
+
         // ─── Observers ───────────────────────────────────────────────────────────
         // ApplicationObserver: mencatat activity log otomatis setiap kali
         // lamaran dibuat atau status-nya berubah.

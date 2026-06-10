@@ -21,7 +21,7 @@ class ApplicationNotePolicy
      */
     public function view(User $user, ApplicationNote $applicationNote): bool
     {
-        return false;
+        return $applicationNote->user_id === $user->id;
     }
 
     /**
@@ -29,7 +29,7 @@ class ApplicationNotePolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class ApplicationNotePolicy
      */
     public function update(User $user, ApplicationNote $applicationNote): bool
     {
-        return false;
+        return $applicationNote->user_id === $user->id;
     }
 
     /**
@@ -45,7 +45,7 @@ class ApplicationNotePolicy
      */
     public function delete(User $user, ApplicationNote $applicationNote): bool
     {
-        return false;
+        return $applicationNote->user_id === $user->id;
     }
 
     /**

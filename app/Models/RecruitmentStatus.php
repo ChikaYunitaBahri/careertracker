@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 class RecruitmentStatus extends Model
 {
-    protected $fillable = ['slug', 'label', 'color', 'order_position', 'is_active'];
+    protected $fillable = ['slug', 'label', 'color', 'sort_order', 'order_position', 'is_active'];
 
     protected function casts(): array
     {

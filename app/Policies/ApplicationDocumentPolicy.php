@@ -21,7 +21,7 @@ class ApplicationDocumentPolicy
      */
     public function view(User $user, ApplicationDocument $applicationDocument): bool
     {
-        return false;
+        return $applicationDocument->user_id === $user->id;
     }
 
     /**
@@ -29,7 +29,7 @@ class ApplicationDocumentPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class ApplicationDocumentPolicy
      */
     public function update(User $user, ApplicationDocument $applicationDocument): bool
     {
-        return false;
+        return $applicationDocument->user_id === $user->id;
     }
 
     /**
@@ -45,7 +45,7 @@ class ApplicationDocumentPolicy
      */
     public function delete(User $user, ApplicationDocument $applicationDocument): bool
     {
-        return false;
+        return $applicationDocument->user_id === $user->id;
     }
 
     /**

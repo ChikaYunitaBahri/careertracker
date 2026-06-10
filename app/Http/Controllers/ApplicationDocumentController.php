@@ -55,8 +55,10 @@ class ApplicationDocumentController extends Controller
         // Pastikan file benar-benar ada di storage sebelum dikirim
         abort_unless(Storage::disk('private')->exists($document->file_path), 404);
 
-        return Storage::disk('private')->download(
-            $document->file_path,
+        $filePath = Storage::disk('private')->path($document->file_path);
+
+        return response()->download(
+            $filePath,
             $document->file_name
         );
     }

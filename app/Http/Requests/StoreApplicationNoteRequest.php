@@ -12,7 +12,15 @@ class StoreApplicationNoteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->applicationNote->user_id === $this->user()->id;
+        $application = $this->route('application');
+        $note = $this->route('note');
+
+        if ($note) {
+            return $note->user_id === $this->user()->id
+                && $note->application_id === $application?->id;
+        }
+
+        return $application?->user_id === $this->user()->id;
     }
 
     /**

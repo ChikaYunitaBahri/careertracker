@@ -12,7 +12,15 @@ class StoreApplicationDocumentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->applicationDocument->user_id === $this->user()->id;
+        $application = $this->route('application');
+        $document = $this->route('document');
+
+        if ($document) {
+            return $document->user_id === $this->user()->id
+                && $document->application_id === $application?->id;
+        }
+
+        return $application?->user_id === $this->user()->id;
     }
 
     /**
@@ -28,7 +36,7 @@ class StoreApplicationDocumentRequest extends FormRequest
                 'required',
                 'file',
                 'max:10240',      // maksimum 10MB
-                'mimes:pdf,doc,docx,jpg,jpeg,png',
+                'mimes:pdf,doc,docx,jpg,jpeg,png,zip',
             ],
         ];
     }
