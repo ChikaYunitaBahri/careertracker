@@ -1,0 +1,245 @@
+@extends('layouts.app')
+
+@section('content')
+
+<div class="space-y-5">
+
+    {{-- Page Header --}}
+    <div class="flex items-start justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold tracking-tight text-[#191C1F]">
+                Edit Perusahaan
+            </h1>
+            <p class="text-sm text-[#797586] mt-1">
+                Perbarui informasi perusahaan
+            </p>
+        </div>
+    </div>
+
+    {{-- Form Container --}}
+    <div class="bg-white border border-[#E1E2E6] rounded-xl overflow-hidden">
+
+        <form action="{{ route('companies.update', \) }}" method="POST" class="p-8">
+            @csrf
+            @method('PUT')
+
+            {{-- Two Column Layout --}}
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                {{-- Left Column --}}
+                <div class="space-y-6">
+
+                    {{-- Company Name --}}
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-[#191C1F] mb-2">
+                            Nama Perusahaan <span class="text-red-500">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="{{ old('name', \->name) }}"
+                            required
+                            class="w-full px-4 py-2.5 text-sm border border-[#E1E2E6] rounded-lg text-[#191C1F] placeholder-[#ADADB8] focus:outline-none focus:ring-2 focus:ring-[#5E3BDB]/15 focus:border-[#5E3BDB] transition-colors"
+                            placeholder="PT. Nama Perusahaan">
+                        @error('name')
+                            <p class="text-xs text-red-500 mt-1.5">{{ \ }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Industry --}}
+                    <div>
+                        <label for="industry" class="block text-sm font-medium text-[#191C1F] mb-2">
+                            Industri
+                        </label>
+                        <select
+                            id="industry"
+                            name="industry"
+                            class="w-full px-4 py-2.5 text-sm border border-[#E1E2E6] rounded-lg text-[#191C1F] focus:outline-none focus:ring-2 focus:ring-[#5E3BDB]/15 focus:border-[#5E3BDB] transition-colors">
+                            <option value="">Pilih Industri</option>
+                            <option value="Technology" {{ old('industry', \->industry) == 'Technology' ? 'selected' : '' }}>Technology</option>
+                            <option value="Finance" {{ old('industry', \->industry) == 'Finance' ? 'selected' : '' }}>Finance</option>
+                            <option value="Startup" {{ old('industry', \->industry) == 'Startup' ? 'selected' : '' }}>Startup</option>
+                            <option value="Enterprise" {{ old('industry', \->industry) == 'Enterprise' ? 'selected' : '' }}>Enterprise</option>
+                            <option value="Retail" {{ old('industry', \->industry) == 'Retail' ? 'selected' : '' }}>Retail</option>
+                            <option value="Healthcare" {{ old('industry', \->industry) == 'Healthcare' ? 'selected' : '' }}>Healthcare</option>
+                            <option value="Education" {{ old('industry', \->industry) == 'Education' ? 'selected' : '' }}>Education</option>
+                            <option value="Lainnya" {{ old('industry', \->industry) == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                        </select>
+                        @error('industry')
+                            <p class="text-xs text-red-500 mt-1.5">{{ \ }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Size --}}
+                    <div>
+                        <label for="size" class="block text-sm font-medium text-[#191C1F] mb-2">
+                            Ukuran Perusahaan
+                        </label>
+                        <select
+                            id="size"
+                            name="size"
+                            class="w-full px-4 py-2.5 text-sm border border-[#E1E2E6] rounded-lg text-[#191C1F] focus:outline-none focus:ring-2 focus:ring-[#5E3BDB]/15 focus:border-[#5E3BDB] transition-colors">
+                            <option value="">Pilih Ukuran</option>
+                            <option value="startup" {{ old('size', \->size) == 'startup' ? 'selected' : '' }}>Startup</option>
+                            <option value="small" {{ old('size', \->size) == 'small' ? 'selected' : '' }}>Kecil</option>
+                            <option value="medium" {{ old('size', \->size) == 'medium' ? 'selected' : '' }}>Menengah</option>
+                            <option value="large" {{ old('size', \->size) == 'large' ? 'selected' : '' }}>Besar</option>
+                            <option value="corporate" {{ old('size', \->size) == 'corporate' ? 'selected' : '' }}>Korporat</option>
+                        </select>
+                        @error('size')
+                            <p class="text-xs text-red-500 mt-1.5">{{ \ }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Website --}}
+                    <div>
+                        <label for="website" class="block text-sm font-medium text-[#191C1F] mb-2">
+                            Website
+                        </label>
+                        <input
+                            type="url"
+                            id="website"
+                            name="website"
+                            value="{{ old('website', \->website) }}"
+                            class="w-full px-4 py-2.5 text-sm border border-[#E1E2E6] rounded-lg text-[#191C1F] placeholder-[#ADADB8] focus:outline-none focus:ring-2 focus:ring-[#5E3BDB]/15 focus:border-[#5E3BDB] transition-colors"
+                            placeholder="https://example.com">
+                        @error('website')
+                            <p class="text-xs text-red-500 mt-1.5">{{ \ }}</p>
+                        @enderror
+                    </div>
+
+                </div>
+
+                {{-- Right Column --}}
+                <div class="space-y-6">
+
+                    {{-- Location --}}
+                    <div>
+                        <label for="location" class="block text-sm font-medium text-[#191C1F] mb-2">
+                            Lokasi
+                        </label>
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            value="{{ old('location', \->location) }}"
+                            class="w-full px-4 py-2.5 text-sm border border-[#E1E2E6] rounded-lg text-[#191C1F] placeholder-[#ADADB8] focus:outline-none focus:ring-2 focus:ring-[#5E3BDB]/15 focus:border-[#5E3BDB] transition-colors"
+                            placeholder="Jakarta, Indonesia">
+                        @error('location')
+                            <p class="text-xs text-red-500 mt-1.5">{{ \ }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Logo URL --}}
+                    <div>
+                        <label for="logo_url" class="block text-sm font-medium text-[#191C1F] mb-2">
+                            URL Logo Perusahaan
+                        </label>
+                        <input
+                            type="url"
+                            id="logo_url"
+                            name="logo_url"
+                            value="{{ old('logo_url', \->logo_url) }}"
+                            class="w-full px-4 py-2.5 text-sm border border-[#E1E2E6] rounded-lg text-[#191C1F] placeholder-[#ADADB8] focus:outline-none focus:ring-2 focus:ring-[#5E3BDB]/15 focus:border-[#5E3BDB] transition-colors"
+                            placeholder="https://example.com/logo.png">
+                        @error('logo_url')
+                            <p class="text-xs text-red-500 mt-1.5">{{ \ }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Personal Rating --}}
+                    <div>
+                        <label for="personal_rating" class="block text-sm font-medium text-[#191C1F] mb-2">
+                            Rating Pribadi (1-5)
+                        </label>
+                        <input
+                            type="number"
+                            id="personal_rating"
+                            name="personal_rating"
+                            min="1"
+                            max="5"
+                            value="{{ old('personal_rating', \->personal_rating) }}"
+                            class="w-full px-4 py-2.5 text-sm border border-[#E1E2E6] rounded-lg text-[#191C1F] placeholder-[#ADADB8] focus:outline-none focus:ring-2 focus:ring-[#5E3BDB]/15 focus:border-[#5E3BDB] transition-colors"
+                            placeholder="Berikan rating 1-5">
+                        @error('personal_rating')
+                            <p class="text-xs text-red-500 mt-1.5">{{ \ }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Description --}}
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-[#191C1F] mb-2">
+                            Deskripsi
+                        </label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            rows="3"
+                            class="w-full px-4 py-2.5 text-sm border border-[#E1E2E6] rounded-lg text-[#191C1F] placeholder-[#ADADB8] focus:outline-none focus:ring-2 focus:ring-[#5E3BDB]/15 focus:border-[#5E3BDB] transition-colors resize-none"
+                            placeholder="Deskripsi singkat tentang perusahaan...">{{ old('description', \->description) }}</textarea>
+                        @error('description')
+                            <p class="text-xs text-red-500 mt-1.5">{{ \ }}</p>
+                        @enderror
+                    </div>
+
+                </div>
+
+            </div>
+
+            {{-- Additional Fields --}}
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8 pt-8 border-t border-[#E1E2E6]">
+
+                {{-- Culture Notes --}}
+                <div>
+                    <label for="culture_notes" class="block text-sm font-medium text-[#191C1F] mb-2">
+                        Catatan Budaya Perusahaan
+                    </label>
+                    <textarea
+                        id="culture_notes"
+                        name="culture_notes"
+                        rows="3"
+                        class="w-full px-4 py-2.5 text-sm border border-[#E1E2E6] rounded-lg text-[#191C1F] placeholder-[#ADADB8] focus:outline-none focus:ring-2 focus:ring-[#5E3BDB]/15 focus:border-[#5E3BDB] transition-colors resize-none"
+                        placeholder="Tuliskan catatan tentang budaya perusahaan...">{{ old('culture_notes', \->culture_notes) }}</textarea>
+                    @error('culture_notes')
+                        <p class="text-xs text-red-500 mt-1.5">{{ \ }}</p>
+                    @enderror
+                </div>
+
+                {{-- Benefits Notes --}}
+                <div>
+                    <label for="benefits_notes" class="block text-sm font-medium text-[#191C1F] mb-2">
+                        Catatan Benefit & Gaji
+                    </label>
+                    <textarea
+                        id="benefits_notes"
+                        name="benefits_notes"
+                        rows="3"
+                        class="w-full px-4 py-2.5 text-sm border border-[#E1E2E6] rounded-lg text-[#191C1F] placeholder-[#ADADB8] focus:outline-none focus:ring-2 focus:ring-[#5E3BDB]/15 focus:border-[#5E3BDB] transition-colors resize-none"
+                        placeholder="Tuliskan catatan tentang benefit dan gaji...">{{ old('benefits_notes', \->benefits_notes) }}</textarea>
+                    @error('benefits_notes')
+                        <p class="text-xs text-red-500 mt-1.5">{{ \ }}</p>
+                    @enderror
+                </div>
+
+            </div>
+
+            {{-- Form Actions --}}
+            <div class="flex gap-3 mt-8 pt-6 border-t border-[#E1E2E6]">
+                <a href="{{ route('companies.index') }}" class="flex items-center gap-1.5 px-6 py-2.5 text-sm font-medium text-[#797586] bg-[#F8F9FD] hover:bg-[#EAEBEF] rounded-lg transition-colors">
+                    <i class="ri-arrow-left-line"></i>
+                    Kembali
+                </a>
+                <button type="submit" class="flex items-center gap-1.5 px-6 py-2.5 text-sm font-medium text-white bg-[#5E3BDB] hover:bg-[#4d31b8] rounded-lg transition-colors ml-auto">
+                    <i class="ri-save-line"></i>
+                    Perbarui Perusahaan
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@endsection

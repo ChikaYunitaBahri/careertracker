@@ -29,9 +29,9 @@
             <div class="absolute top-6 right-6 w-9 h-9 rounded-2xl bg-violet-100 flex items-center justify-center text-purple-600">
                 <i class="ri-group-line"></i>
             </div>
-            <p class="text-sm text-[#797586]">Applications</p>
-            <h2 class="text-5xl font-bold mt-3">25</h2>
-            <p class="text-green-600 text-sm mt-3">+12% this month</p>
+            <p class="text-sm text-[#797586]">Lamaran</p>
+            <h2 class="text-5xl font-bold mt-3">{{ $totalApplications }}</h2>
+            <p class="text-green-600 text-sm mt-3">{{ $totalApplications }} aktif</p>
         </div>
 
         {{-- Interviews --}}
@@ -41,9 +41,9 @@
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10"/><path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2"/>
                 </svg>
             </div>
-            <p class="text-sm text-[#797586]">Interviews</p>
-            <h2 class="text-5xl font-bold mt-3">8</h2>
-            <p class="text-green-600 text-sm mt-3">+3 upcoming</p>
+            <p class="text-sm text-[#797586]">Wawancara</p>
+            <h2 class="text-5xl font-bold mt-3">{{ $totalInterviews }}</h2>
+            <p class="text-green-600 text-sm mt-3">{{ $totalInterviews }} terjadwal</p>
         </div>
 
         {{-- Offers --}}
@@ -54,9 +54,9 @@
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 21l8 0"/><path d="M12 17l0 4"/><path d="M7 4l5 3l5 -3"/><path d="M7 4l0 7.5l5 3l5 -3l0 -7.5"/>
                 </svg>
             </div>
-            <p class="text-sm text-[#797586]">Offers</p>
-            <h2 class="text-5xl font-bold mt-3">2</h2>
-            <p class="text-[#5E3BDB] text-sm mt-3">Waiting response</p>
+            <p class="text-sm text-[#797586]">Tawaran</p>
+            <h2 class="text-5xl font-bold mt-3">{{ $totalOffers }}</h2>
+            <p class="text-[#5E3BDB] text-sm mt-3">Menunggu respons</p>
         </div>
 
         {{-- Success Rate --}}
@@ -66,9 +66,9 @@
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 17l4 -4l4 4l4 -8l4 4"/>
                 </svg>
             </div>
-            <p class="text-sm text-[#797586]">Success Rate</p>
-            <h2 class="text-5xl font-bold mt-3">35%</h2>
-            <p class="text-green-600 text-sm mt-3">Better than last month</p>
+            <p class="text-sm text-[#797586]">Rate Keberhasilan</p>
+            <h2 class="text-5xl font-bold mt-3">{{ $successRate }}%</h2>
+            <p class="text-green-600 text-sm mt-3">Lamaran yang diterima</p>
         </div>
 
     </div>
@@ -83,11 +83,11 @@
             <div class="flex justify-between items-center mb-8">
 
                 <h2 class="text-2xl font-semibold">
-                    Career Goal Progress
+                    Progress Goal Karier
                 </h2>
 
                 <span class="text-sm text-[#797586]">
-                    3 Active Goals
+                    3 Goal Aktif
                 </span>
 
             </div>
@@ -99,7 +99,7 @@
                     <div class="flex justify-between mb-3">
 
                         <span class="font-medium">
-                            Become Product Designer
+                            Menjadi Product Designer
                         </span>
 
                         <span>
@@ -124,7 +124,7 @@
                     <div class="flex justify-between mb-3">
 
                         <span class="font-medium">
-                            Build Portfolio Website
+                            Membangun Website Portfolio
                         </span>
 
                         <span>
@@ -149,7 +149,7 @@
                     <div class="flex justify-between mb-3">
 
                         <span class="font-medium">
-                            Complete UI/UX Certification
+                            Menyelesaikan Sertifikasi UI/UX
                         </span>
 
                         <span>
@@ -178,7 +178,7 @@
             class="bg-white border border-[#E1E2E6] rounded-2xl p-6">
 
             <h2 class="text-2xl font-semibold mb-8">
-                Upcoming Activities
+                Aktivitas Mendatang
             </h2>
 
             <div class="space-y-6">
@@ -194,7 +194,7 @@
                         </p>
 
                         <p class="text-[#797586]">
-                            Google • Tomorrow
+                            Google • Besok
                         </p>
 
                     </div>
@@ -208,11 +208,11 @@
                     <div>
 
                         <p class="font-semibold">
-                            Portfolio Review
+                            Review Portfolio
                         </p>
 
                         <p class="text-[#797586]">
-                            Friday • 13:00
+                            Jumat • 13:00
                         </p>
 
                     </div>
@@ -226,11 +226,11 @@
                     <div>
 
                         <p class="font-semibold">
-                            Goal Deadline
+                            Deadline Goal
                         </p>
 
                         <p class="text-[#797586]">
-                            UI/UX Certificate
+                            Sertifikasi UI/UX
                         </p>
 
                     </div>
@@ -253,12 +253,12 @@
                 class="p-6 border-b border-[#E1E2E6] flex justify-between items-center">
 
                 <h2 class="text-2xl font-semibold">
-                    Recent Applications
+                    Aplikasi Terbaru
                 </h2>
 
-                <a href="#"
+                <a href="{{ route('applications.index') }}"
                     class="text-[#5E3BDB] font-medium hover:underline">
-                    View All
+                    Lihat Semua
                 </a>
 
             </div>
@@ -271,11 +271,11 @@
                         class="bg-[#F8F9FD] text-left text-sm text-[#797586]">
 
                         <th class="px-6 py-4">
-                            Company
+                            Perusahaan
                         </th>
 
                         <th class="py-4">
-                            Position
+                            Posisi
                         </th>
 
                         <th class="py-4">
@@ -288,74 +288,36 @@
 
                 <tbody>
 
-                    <tr class="border-t border-[#E1E2E6]">
+                    @forelse($recentApplications as $application)
+                        <tr class="border-t border-[#E1E2E6]">
 
-                        <td class="px-6 py-5">
-                            Google
-                        </td>
+                            <td class="px-6 py-5">
+                                {{ $application->company_name }}
+                            </td>
 
-                        <td>
-                            Product Designer
-                        </td>
+                            <td>
+                                {{ $application->position_name }}
+                            </td>
 
-                        <td>
+                            <td>
 
-                            <span
-                                class="px-3 py-1 rounded-full bg-violet-100 text-violet-700 text-sm">
+                                <span
+                                    class="px-3 py-1 rounded-full bg-violet-100 text-violet-700 text-sm">
 
-                                Interview
+                                    {{ $application->status->label ?? '-' }}
 
-                            </span>
+                                </span>
 
-                        </td>
+                            </td>
 
-                    </tr>
-
-                    <tr class="border-t border-[#E1E2E6]">
-
-                        <td class="px-6 py-5">
-                            Shopee
-                        </td>
-
-                        <td>
-                            UI Designer
-                        </td>
-
-                        <td>
-
-                            <span
-                                class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm">
-
-                                Applied
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                    <tr class="border-t border-[#E1E2E6]">
-
-                        <td class="px-6 py-5">
-                            Tokopedia
-                        </td>
-
-                        <td>
-                            Frontend Developer
-                        </td>
-
-                        <td>
-
-                            <span
-                                class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm">
-
-                                Offer
-
-                            </span>
-
-                        </td>
-
-                    </tr>
+                        </tr>
+                    @empty
+                        <tr class="border-t border-[#E1E2E6]">
+                            <td colspan="3" class="px-6 py-8 text-center text-[#797586]">
+                                Belum ada lamaran.
+                            </td>
+                        </tr>
+                    @endforelse
 
                 </tbody>
 
@@ -368,35 +330,17 @@
             class="bg-white border border-[#E1E2E6] rounded-2xl p-6">
 
             <h2 class="text-2xl font-semibold mb-6">
-                Application Pipeline
+                Pipeline Aplikasi
             </h2>
 
             <div class="space-y-5">
 
-                <div class="flex justify-between">
-                    <span>Applied</span>
-                    <span>25</span>
-                </div>
-
-                <div class="flex justify-between">
-                    <span>Review</span>
-                    <span>12</span>
-                </div>
-
-                <div class="flex justify-between">
-                    <span>Interview</span>
-                    <span>8</span>
-                </div>
-
-                <div class="flex justify-between">
-                    <span>Offer</span>
-                    <span>2</span>
-                </div>
-
-                <div class="flex justify-between">
-                    <span>Rejected</span>
-                    <span>6</span>
-                </div>
+                @foreach($pipelineStatuses as $status)
+                    <div class="flex justify-between">
+                        <span>{{ $status->label }}</span>
+                        <span>{{ $status->applications_count }}</span>
+                    </div>
+                @endforeach
 
             </div>
 

@@ -14,42 +14,63 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Guest Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/', function () {
-        return redirect()->route('login');
-    });
-
-    // Dashboard
+    // ── Dashboard ────────────────────────────────────────────────────────
     Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->name('dashboard');
+        ->name('dashboard');
 
-    // Applications (Tracker Lamaran)
-    Route::resource('applications', ApplicationController::class)
-        ->except(['create', 'edit']); // Gunakan modal/SPA, skip view routes
+    // ── Applications ─────────────────────────────────────────────────────
+    // Full resource (index, create, store, show, edit, update, destroy)
+    Route::resource('applications', ApplicationController::class);
 
-    // Nested resources di bawah Application
+    // Nested: Notes & Documents
     Route::prefix('applications/{application}')->name('applications.')->group(function () {
+
         Route::resource('notes', ApplicationNoteController::class)
             ->only(['store', 'update', 'destroy']);
 
         Route::resource('documents', ApplicationDocumentController::class)
             ->only(['store', 'destroy']);
+
+        Route::get('documents/{document}/download', [ApplicationDocumentController::class, 'download'])
+            ->name('documents.download');
     });
 
-    // Companies (Manajemen Perusahaan)
+    // ── Companies ────────────────────────────────────────────────────────
     Route::resource('companies', CompanyController::class);
 
     Route::prefix('companies/{company}')->name('companies.')->group(function () {
         Route::resource('contacts', CompanyContactController::class)
-            ->only(['store', 'update', 'destroy']);
+            ->only(['create', 'store', 'edit', 'update', 'destroy'])
+            ->names([
+                'create' => 'contacts.create',
+                'store' => 'contacts.store',
+                'edit' => 'contacts.edit',
+                'update' => 'contacts.update',
+                'destroy' => 'contacts.destroy',
+            ]);
     });
 
-    // Calendar Events
+    // ── Calendar Events ──────────────────────────────────────────────────
     Route::resource('calendar-events', CalendarEventController::class)
         ->except(['create', 'edit']);
 
-    // Career Goals
+    // ── Career Goals ─────────────────────────────────────────────────────
     Route::resource('career-goals', CareerGoalController::class)
         ->except(['create', 'edit']);
 
@@ -58,27 +79,21 @@ Route::middleware(['auth'])->group(function () {
             ->only(['store', 'update', 'destroy']);
     });
 
-    // Notifications
+    // ── Notifications ────────────────────────────────────────────────────
     Route::prefix('notifications')->name('notifications.')->group(function () {
-        Route::get('/', [NotificationController::class, 'index'])->name('index');
-        Route::patch('{id}/read', [NotificationController::class, 'markAsRead'])->name('read');
-        Route::post('read-all', [NotificationController::class, 'markAllRead'])->name('read-all');
+        Route::get('/',              [NotificationController::class, 'index'])       ->name('index');
+        Route::patch('{id}/read',    [NotificationController::class, 'markAsRead'])  ->name('read');
+        Route::post('read-all',      [NotificationController::class, 'markAllRead']) ->name('read-all');
     });
 
-    // User Notification Preferences
+    // ── Notification Preferences ─────────────────────────────────────────
     Route::singleton('notification-prefs', UserNotificationPrefController::class)
         ->only(['show', 'update']);
 
-
-    // Profile
-    Route::get('/profile', [ProfileController::class, 'edit'])
-        ->name('profile.edit');
-
-    Route::patch('/profile', [ProfileController::class, 'update'])
-        ->name('profile.update');
-
-    Route::delete('/profile', [ProfileController::class, 'destroy'])
-        ->name('profile.destroy');
+    // ── Profile ──────────────────────────────────────────────────────────
+    Route::get('/profile',    [ProfileController::class, 'edit'])    ->name('profile.edit');
+    Route::patch('/profile',  [ProfileController::class, 'update'])  ->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy']) ->name('profile.destroy');
 
 });
 
