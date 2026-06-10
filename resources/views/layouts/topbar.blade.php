@@ -8,11 +8,11 @@
             @php
                 $pageNames = [
                     'applications' => 'Lamaran',
-                    'perusahaan' => 'Perusahaan',
-                    'kalender' => 'Kalender',
-                    'goal-karier' => 'Goal Karier',
+                    'companies' => 'Perusahaan',
+                    'calendar' => 'Kalender',
+                    'career-goal' => 'Goal Karier',
                     'analytics' => 'Analytics',
-                    'pengaturan' => 'Pengaturan',
+                    'settings' => 'Pengaturan',
                 ];
                 $currentSegment = request()->segment(1) ?: 'dashboard';
                 $pageName = $pageNames[$currentSegment] ?? ucfirst($currentSegment);
@@ -111,22 +111,14 @@
 
                 <div class="border-t border-[#E1E2E6]"></div>
 
-                <form method="POST"
-                    action="{{ route('logout') }}">
-
-                    @csrf
-
-                    <button
-                        type="submit"
-                        class="w-full text-left flex items-center gap-3 px-4 py-3 hover:bg-red-50 text-red-600">
-
-                        <i class="ri-logout-box-r-line"></i>
-
-                        Keluar
-
-                    </button>
-
-                </form>
+                {{-- Logout --}}
+                <button
+                    type="button"
+                    onclick="document.getElementById('logoutModal').style.display='flex'"
+                    class="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50">
+                    <i class="ri-logout-box-r-line"></i>
+                    <span>Keluar</span>
+                </button>
 
             </div>
 

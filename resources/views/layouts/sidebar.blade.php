@@ -172,27 +172,48 @@
             <div class="border-t border-[#E1E2E6]"></div>
 
             {{-- Logout --}}
-            <form
-                method="POST"
-                action="{{ route('logout') }}">
-
-                @csrf
-
-                <button
-                    type="submit"
-                    class="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50">
-
-                    <i class="ri-logout-box-r-line"></i>
-
-                    <span>Keluar</span>
-
-                </button>
-
-            </form>
+            <button
+                type="button"
+                onclick="document.getElementById('logoutModal').style.display='flex'"
+                class="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50">
+                <i class="ri-logout-box-r-line"></i>
+                <span>Keluar</span>
+            </button>
 
         </div>
 
     </div>
-    
+    {{-- Logout Confirmation Modal --}}
+    <div id="logoutModal"
+        style="display:none; position:fixed; inset:0; z-index:100; align-items:center; justify-content:center; padding:1rem; background:rgba(0,0,0,0.4); backdrop-filter:blur(4px);"
+        onclick="if(event.target===this) this.style.display='none'">
 
+        <div style="background:white; border-radius:1rem; box-shadow:0 20px 60px rgba(0,0,0,0.15); width:100%; max-width:22rem; padding:1.5rem;">
+
+            <div style="width:3.5rem; height:3.5rem; background:#fef2f2; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+                <i class="ri-logout-box-r-line" style="font-size:1.5rem; color:#ef4444;"></i>
+            </div>
+
+            <div style="text-align:center; margin-bottom:1.5rem;">
+                <h3 style="font-size:1.125rem; font-weight:700; color:#191C1F; margin:0 0 0.375rem;">Keluar dari akun?</h3>
+                <p style="font-size:0.875rem; color:#797586; margin:0;">Sesi Anda akan diakhiri dan Anda perlu login kembali.</p>
+            </div>
+
+            <div style="display:flex; gap:0.75rem;">
+                <button
+                    onclick="document.getElementById('logoutModal').style.display='none'"
+                    style="flex:1; padding:0.625rem 1rem; font-size:0.875rem; font-weight:500; color:#797586; background:#F8F9FD; border:none; border-radius:0.75rem; cursor:pointer;">
+                    Batal
+                </button>
+                <form method="POST" action="{{ route('logout') }}" style="flex:1;">
+                    @csrf
+                    <button type="submit"
+                        style="width:100%; padding:0.625rem 1rem; font-size:0.875rem; font-weight:500; color:white; background:#ef4444; border:none; border-radius:0.75rem; cursor:pointer;">
+                        Ya, Keluar
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
 </aside>
