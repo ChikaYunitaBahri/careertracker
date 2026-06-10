@@ -34,51 +34,59 @@
         <div class="space-y-1">
 
             <a href="{{ route('dashboard') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#EEF2FF] text-[#5E3BDB] font-medium">
-
+                @class([
+                    'flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors',
+                    'bg-[#EEF2FF] text-[#5E3BDB]' => request()->routeIs('dashboard'),
+                    'text-[#797586] hover:bg-[#F4F5F7]' => !request()->routeIs('dashboard'),
+                ])>
                 <i class="ri-dashboard-line"></i>
                 Dashboard
-
             </a>
 
             <a href="{{ route('applications.index') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F4F5F7]">
-
+                @class([
+                    'flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors',
+                    'bg-[#EEF2FF] text-[#5E3BDB]' => request()->routeIs('applications.*'),
+                    'text-[#797586] hover:bg-[#F4F5F7]' => !request()->routeIs('applications.*'),
+                ])>
                 <i class="ri-file-list-3-line"></i>
-                Applications
-
+                Lamaran
             </a>
 
             <a href="{{ route('companies.index') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F4F5F7]">
-
+                @class([
+                    'flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors',
+                    'bg-[#EEF2FF] text-[#5E3BDB]' => request()->routeIs('companies.*'),
+                    'text-[#797586] hover:bg-[#F4F5F7]' => !request()->routeIs('companies.*'),
+                ])>
                 <i class="ri-building-line"></i>
-                Companies
-
+                Perusahaan
             </a>
 
             <a href="{{ route('calendar-events.index') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F4F5F7]">
-
+                @class([
+                    'flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors',
+                    'bg-[#EEF2FF] text-[#5E3BDB]' => request()->routeIs('calendar-events.*'),
+                    'text-[#797586] hover:bg-[#F4F5F7]' => !request()->routeIs('calendar-events.*'),
+                ])>
                 <i class="ri-calendar-line"></i>
-                Calendar
-
+                Kalender
             </a>
 
             <a href="{{ route('career-goals.index') }}"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F4F5F7]">
-
+                @class([
+                    'flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors',
+                    'bg-[#EEF2FF] text-[#5E3BDB]' => request()->routeIs('career-goals.*'),
+                    'text-[#797586] hover:bg-[#F4F5F7]' => !request()->routeIs('career-goals.*'),
+                ])>
                 <i class="ri-focus-3-line"></i>
-                Career Goals
-
+                Goal Karier
             </a>
 
             <a href="#"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F4F5F7]">
-
+                class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#797586] hover:bg-[#F4F5F7] transition-colors">
                 <i class="ri-bar-chart-box-line"></i>
                 Analytics
-
             </a>
 
         </div>
@@ -86,11 +94,9 @@
         <div class="border-t border-[#E1E2E6] my-5"></div>
 
         <a href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F4F5F7]">
-
+            class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#797586] hover:bg-[#F4F5F7] transition-colors">
             <i class="ri-settings-3-line"></i>
-            Settings
-
+            Pengaturan
         </a>
 
     </nav>
@@ -148,7 +154,7 @@
 
                 <i class="ri-user-line"></i>
 
-                <span>Profile</span>
+                <span>Profil</span>
 
             </a>
 

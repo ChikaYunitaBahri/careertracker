@@ -5,7 +5,19 @@
     <div>
 
         <h2 class="text-lg font-semibold text-[#191C1F]">
-            {{ ucfirst(request()->segment(1) ?: 'Dashboard') }}
+            @php
+                $pageNames = [
+                    'applications' => 'Lamaran',
+                    'perusahaan' => 'Perusahaan',
+                    'kalender' => 'Kalender',
+                    'goal-karier' => 'Goal Karier',
+                    'analytics' => 'Analytics',
+                    'pengaturan' => 'Pengaturan',
+                ];
+                $currentSegment = request()->segment(1) ?: 'dashboard';
+                $pageName = $pageNames[$currentSegment] ?? ucfirst($currentSegment);
+            @endphp
+            {{ $pageName }}
         </h2>
 
     </div>
@@ -22,9 +34,9 @@
 
                 <i class="ri-notification-3-line text-xl"></i>
 
-                <span
+                <!-- <span
                     class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full">
-                </span>
+                </span> -->
 
             </button>
 
@@ -37,14 +49,14 @@
                 <div class="p-4 border-b">
 
                     <h3 class="font-semibold">
-                        Notifications
+                        Notifikasi
                     </h3>
 
                 </div>
 
                 <div class="p-4 text-sm text-[#797586]">
 
-                    No new notifications
+                    Tidak ada notifikasi baru.
 
                 </div>
 
@@ -93,7 +105,7 @@
 
                     <i class="ri-user-line"></i>
 
-                    Profile
+                    Profil
 
                 </a>
 
