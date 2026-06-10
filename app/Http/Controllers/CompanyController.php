@@ -16,9 +16,11 @@ class CompanyController extends Controller
      */
     public function index(Request $request): View
     {
+        $viewMode = $request->get('view', 'board') === 'list' ? 'list' : 'board';
+
         $query = auth()->user()
             ->companies()
-            ->withCount('applications');
+            ->withCount('applications', 'contacts');
 
         // Filter pencarian berdasarkan nama perusahaan atau industri
         if ($request->filled('search')) {
@@ -29,14 +31,27 @@ class CompanyController extends Controller
             });
         }
 
-        // Filter berdasarkan ukuran perusahaan
-        if ($request->filled('size')) {
-            $query->where('size', $request->size);
+        // Filter berdasarkan industri
+        if ($request->filled('industry')) {
+            $industries = array_filter(explode(',', $request->industry));
+            if (!empty($industries)) {
+                $query->whereIn('industry', $industries);
+            }
         }
 
-        $companies = $query->latest()->paginate(12)->withQueryString();
+        // Sorting
+        $sort = $request->get('sort', 'latest');
+        if ($sort === 'oldest') {
+            $query->oldest();
+        } elseif ($sort === 'name') {
+            $query->orderBy('name', 'asc');
+        } else {
+            $query->latest();
+        }
 
-        return view('companies.index', compact('companies'));
+        $companies = $query->paginate(12)->withQueryString();
+
+        return view('companies.index', compact('companies', 'viewMode'));
     }
 
     /**
@@ -68,7 +83,7 @@ class CompanyController extends Controller
         $company->load([
             'applications.status',
             'contacts' => fn($q) => $q->orderBy('name'),
-        ]);
+        ])->loadCount('applications', 'contacts');
 
         return view('companies.show', compact('company'));
     }
