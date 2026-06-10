@@ -24,72 +24,51 @@
     {{-- Statistics --}}
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
-        <div
-            class="bg-white border border-[#E1E2E6] rounded-2xl p-6">
-
-            <p class="text-sm text-[#797586]">
-                Applications
-            </p>
-
-            <h2 class="text-5xl font-bold mt-3">
-                25
-            </h2>
-
-            <p class="text-green-600 text-sm mt-3">
-                +12% this month
-            </p>
-
+        {{-- Applications --}}
+        <div class="bg-white border border-[#E1E2E6] rounded-2xl p-6 relative">
+            <div class="absolute top-6 right-6 w-9 h-9 rounded-2xl bg-violet-100 flex items-center justify-center text-purple-600">
+                <i class="ri-group-line"></i>
+            </div>
+            <p class="text-sm text-[#797586]">Applications</p>
+            <h2 class="text-5xl font-bold mt-3">25</h2>
+            <p class="text-green-600 text-sm mt-3">+12% this month</p>
         </div>
 
-        <div
-            class="bg-white border border-[#E1E2E6] rounded-2xl p-6">
-
-            <p class="text-sm text-[#797586]">
-                Interviews
-            </p>
-
-            <h2 class="text-5xl font-bold mt-3">
-                8
-            </h2>
-
-            <p class="text-green-600 text-sm mt-3">
-                +3 upcoming
-            </p>
-
+        {{-- Interviews --}}
+        <div class="bg-white border border-[#E1E2E6] rounded-2xl p-6 relative">
+            <div class="absolute top-6 right-6 w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10"/><path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2"/>
+                </svg>
+            </div>
+            <p class="text-sm text-[#797586]">Interviews</p>
+            <h2 class="text-5xl font-bold mt-3">8</h2>
+            <p class="text-green-600 text-sm mt-3">+3 upcoming</p>
         </div>
 
-        <div
-            class="bg-white border border-[#E1E2E6] rounded-2xl p-6">
-
-            <p class="text-sm text-[#797586]">
-                Offers
-            </p>
-
-            <h2 class="text-5xl font-bold mt-3">
-                2
-            </h2>
-
-            <p class="text-[#5E3BDB] text-sm mt-3">
-                Waiting response
-            </p>
-
+        {{-- Offers --}}
+        <div class="bg-white border border-[#E1E2E6] rounded-2xl p-6 relative">
+            <div class="absolute top-6 right-6 w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 21l4 -4l4 4"/><path d="M12 17v-14"/><path d="M3 8l3 -3l3 3"/><path d="M3 5h6"/><path d="M15 8l3 -3l3 3"/><path d="M15 5h6"/>
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 21l8 0"/><path d="M12 17l0 4"/><path d="M7 4l5 3l5 -3"/><path d="M7 4l0 7.5l5 3l5 -3l0 -7.5"/>
+                </svg>
+            </div>
+            <p class="text-sm text-[#797586]">Offers</p>
+            <h2 class="text-5xl font-bold mt-3">2</h2>
+            <p class="text-[#5E3BDB] text-sm mt-3">Waiting response</p>
         </div>
 
-        <div
-            class="bg-white border border-[#E1E2E6] rounded-2xl p-6">
-
-            <p class="text-sm text-[#797586]">
-                Success Rate
-            </p>
-
-            <h2 class="text-5xl font-bold mt-3">
-                35%
-            </h2>
-
-            <p class="text-green-600 text-sm mt-3">
-                Better than last month
-            </p>
-
+        {{-- Success Rate --}}
+        <div class="bg-white border border-[#E1E2E6] rounded-2xl p-6 relative">
+            <div class="absolute top-6 right-6 w-9 h-9 rounded-xl bg-violet-50 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-[#5E3BDB]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 17l4 -4l4 4l4 -8l4 4"/>
+                </svg>
+            </div>
+            <p class="text-sm text-[#797586]">Success Rate</p>
+            <h2 class="text-5xl font-bold mt-3">35%</h2>
+            <p class="text-green-600 text-sm mt-3">Better than last month</p>
         </div>
 
     </div>
